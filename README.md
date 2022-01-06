@@ -1,5 +1,5 @@
 # GME_Cpp
-This is the C++ implementation of the GME method
+Welcome to the c++ implementation of the GME method
 
 # 1   Introduction
 
