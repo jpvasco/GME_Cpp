@@ -1,4 +1,4 @@
-# GMEcpp
+# GME_Cpp
 Welcome to the c++ implementation of the GME method
 
 # 1   Introduction
