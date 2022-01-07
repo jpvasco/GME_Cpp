@@ -10,7 +10,7 @@ The following files are included in the GME_Cpp package:
 |`matrix.h`|Matrix computations|
 |`compile.h`|Compiles the code|
 
-# `main.cpp`
+# <br/> The user interface file `main.cpp`
 
 The file `main.ccp` contains the input parameters and the main control sequences of the GME method. This file is broken down as follows: *Initial instructions*, *Photonic dispersion*, *Diffraction losses*, *Structure*, *Basis and symmetry*, *Writing epsilon*, *K list*, *Initial checks and rountines of the code*, *Main loop for each k*
 
@@ -141,6 +141,7 @@ Allocates and computes the dielectric matrices in the corresponding three region
 Allocates the arrays where the guided mode solutions will be stored.
 
 **10. Main loop over the k list**
+
 This is the main loop of the code, which iterate over the k list. The function `dnsgetvi(gme.lk,gme.k,kbz,gme.dimlk,5)` extract the components of the kbz-th k-vector from the array `gme.lk` (where all k points are stored) and copy them in the `gme.k` array. The latter is one used by the functions within the loop. The function `kmess(gme,kbz)` writes the current value of k in the format (kx,ky).
 
 **_Computing the guided mode basis_**
@@ -211,7 +212,7 @@ Deallocates the dielectric matrices in the corresponding three regions.
 Deallocates que G and g arrays.
 
 
-# The `eps.h` library
+# <br/>The `eps.h` library
 
 The library *eps.h* contains the dielectric data structures and the main routines associated to the computation of the dielectric matrices. When using a given dielectric structure, it must be initialized through the constructor `init()`. Some of the structures, also must be deallocated before introducing any change in the geometry or material by means of the function `free()`, and they have to be initialized again. The following structures are currently included in the GME_Cpp package:
 
@@ -509,21 +510,21 @@ L3 defect in a hexagonal lattice of cylinders with disorder (hole radii only) an
 `free()`: deallocates the structure
 
 
-# The `gme.h` library
+# <br/>The `gme.h` library
 
-The library ``gme.h'' contains the main functions and routines of the GME method, corresponding to the photonic dispersion and diffraction losses. The functions associated to the electromagnetic fields and the root solver are also in this library.
-
-
-# The `matrix.h` library
-
-The library ``matrix.h'' contains the LAPACK matrix routines used by the GME method.
+The library *gme.h* contains the main functions and routines of the GME method, corresponding to the photonic dispersion and diffraction losses. The functions associated to the electromagnetic fields and the root solver are also in this library.
 
 
-# The `compile.sh` library
+# <br/>The `matrix.h` library
+
+The library *matrix.h* contains the LAPACK matrix routines used by the GME method.
+
+
+# <br/>The `compile.sh` file
 
 The *compile.sh* is an executable file with the compilation command.
 
 
-# Comments on units
+# <br/>Comments on units
 
-Every length in the c++ GME code is scaled with respect to the lattice parameter 'a'. For example, when setting $d=0.5$, it must be interpreted as 'd/a=0.5'. The wavenumber 'k' is also scaled with respect to the lattice parameter as 'ak, therefore, when setting 'k=2.pi', it must be interpreted as ka=2.pi. The frequency magnitude used in the code is 'w.a/2.pi.c' or 'a/lambda', which is a dimensionless quantity. Therefore, when the code shows a frequency (or its imaginary part) value of '0.32', this means 'w.a/2.pi.c=0.32' so that the actual angular frequency is 'w=0.32.2.pi/a'. 
+Every length in the c++ GME code is scaled with respect to the lattice parameter 'a'. For example, when setting 'd=0.5', it must be interpreted as 'd/a=0.5'. The wavenumber 'k' is also scaled with respect to the lattice parameter as 'ak', therefore, when setting 'k=2.pi', it must be interpreted as 'ak=2.pi'. The frequency magnitude used in the code is 'w.a/2.pi.c' or 'a/lambda', which is a dimensionless quantity. Therefore, when the code shows a frequency (or its imaginary part) value of '0.32', this means 'w.a/2.pi.c=0.32' so that the actual angular frequency is 'w=0.32.2.pi/a'. 
