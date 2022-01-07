@@ -1,6 +1,6 @@
 # Documentation
 
-The following files are included in the GME_Cpp package:
+The following files are included in the GME_Cpp directory:
 
 | File  | Function  |
 |-------|-----------|
