@@ -455,7 +455,7 @@ Waveguide defect in a hexagonal lattice of triangles with rectangular cell.
 `ly`: Supercell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
-`init()`: initializes the dielectric structure.
+`init()`: initializes the dielectric structure.<br/>
 `free()`: deallocates the structure
 
 
@@ -472,7 +472,7 @@ Waveguide defect in a hexagonal lattice of polygons (N sides) with rectangular c
 `ly`: Supercell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
-`init()`: initializes the dielectric structure.
+`init()`: initializes the dielectric structure.<br/>
 `free()`: deallocates the structure
 
 
@@ -505,7 +505,7 @@ L3 defect in a hexagonal lattice of cylinders with disorder (hole radii only) an
 `sigma`: Variance of the gaussian distribution.
 
 **_Constructor and functions_**<br/>
-`init()`: initializes the dielectric structure.
+`init()`: initializes the dielectric structure.<br/>
 `free()`: deallocates the structure
 
 
