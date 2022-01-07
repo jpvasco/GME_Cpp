@@ -12,7 +12,7 @@ The following files are included in the GME_Cpp directory:
 
 # <br/> The user interface file `main.cpp`
 
-The file `main.ccp` contains the input parameters and the main control sequences of the GME method. This file is broken down as follows: *Initial instructions*, *Photonic dispersion*, *Diffraction losses*, *Structure*, *Basis and symmetry*, *Writing epsilon*, *K list*, *Initial checks and rountines of the code*, *Main loop for each k*
+The file `main.ccp` contains the input parameters and the main control sequences of the GME method. This file is broken down as follows: *Initial instructions*, *Photonic dispersion*, *Diffraction losses*, *Structure*, *Basis and symmetry*, *Writing epsilon*, *K list*, *Initial checks and routines of the code*, *Main loop for each k*
 
 **1. Initial instructions**
 
@@ -20,10 +20,10 @@ The file `main.ccp` contains the input parameters and the main control sequences
 Numerical precision of the output.
 
 `gme.sym`<br/>
-If 1 assumes the hermiticity of the H matrix (Maxwell operator), this means, only the upper triangular part of H is built. If different from 1 the complete H matrix is built and the its hermiticity is checked.
+If 1, the hermiticity of the H matrix (Maxwell operator) is assumed and only the upper triangular part of H is built. If this variable is different from 1 the complete H matrix is built and its hermiticity is always checked.
 
 `gme.psym`<br/>
-If 1 sets inversion symmetry of the lattice, which makes the dielectric and H matrices real and symmetric. This option saves memory and makes the computation faster. If different from 1, the dielectric and H matrices are complex and hermitian. Note that, the code does not verify if the selected structure has indeed inversion symmetry.
+If 1, inversion symmetry of the lattice is assumed, and the dielectric and H matrices are considered real and symmetric. This option saves memory and makes the computation faster. If different from 1, the dielectric and H matrices are complex and hermitian. Note that, the code does not verify if the selected structure has indeed inversion symmetry.
 
 **2. Photonic dispersion**
 
@@ -36,7 +36,7 @@ Number of k points in the reciprocal space.
 **3. Diffraction losses**
 
 `gme.cimw`<br/>
-If 1 computes the imaginary part of the frequency, and the eigenvectors are also computed by the eigensolver.
+If 1, the imaginary part of the frequency is computed and the eigenvectors are also obtained by the eigensolver.
 
 `gme.lstat_i` and `gme.lstat_f`<br/>
 Initial and final state to compute the imaginary part of the frequency. Values start from zero.
@@ -47,7 +47,7 @@ Initial and final k points to compute the imaginary part of the frequency. Value
 **4. Fields**
 
 `flim.cfds`<br/>
-If 1 computes the fields, and the eigenvectors are also computed by the eigensolver.
+If 1, the fields are computed and the eigenvectors are also obtained by the eigensolver.
 
 `flim.stat_i` and `flim.stat_f`<br/>
 Initial and final state to compute the fields. Values start from zero.
@@ -56,9 +56,9 @@ Initial and final state to compute the fields. Values start from zero.
 Initial and final k points to compute the fields. Values start from zero.
 
 `flim.Dx`, `flim.Dy`, `flim.Dz`, `flim.Hx`, `flim.Hy` and `flim.Hz`<br/>
-If 1 computes the corresponding field component.
+If 1, the corresponding field component is computed.
 
-`flim.xi`, `flim.xf`, `flim.dx`, `flim.yi`, `flim.yf`, `flim.dy`, `flim.zi`, `flim.zf` and `flim.dz`<br/>  
+`flim.xi`, `flim.xf`, `flim.dx`, `flim.yi`, `flim.yf`, `flim.dy`, `flim.zi`, `flim.zf` and `flim.dz`<br/>
 Initial value, final value and step size in the corresponding coordinate axes to evaluate the fields. These input variables define a 3D rectangular grid. 
 
 **5. Structure**
@@ -84,12 +84,12 @@ Cutoff value which truncates the plane wave basis. The truncated set of plane wa
 Number of guided modes.
 
 `gme.sigm`<br/>
-Symmetry of the eigenmodes to be computed with respect to the reflection operator <img src="https://render.githubusercontent.com/render/math?math=\hat{\sigma}_{xy}">. If 1 the even modes (TE-like) are computed, and if -1 the odd modes (TM-like) are computed. If `gme.e1` is different from `gme.e3` the value of `gme.sigm` is ignored.
+Symmetry of the eigenmodes to be computed with respect to the reflection operator <img src="https://render.githubusercontent.com/render/math?math=\hat{\sigma}_{xy}">. If 1, the even modes (TE-like) are computed. If -1, the odd modes (TM-like) are computed. If `gme.e1` is different from `gme.e3` the value of `gme.sigm` is ignored.
 
 **7. Write epsilon**
 
 `epslim.weps`<br/>
-If 1 the 2D Fourier expansion of the in-plane dielectric function is written.
+If 1, the 2D Fourier expansion of the in-plane dielectric function is written.
 
 `epslim.Gmax`<br/>
 Cutoff used to write the Fourier expansion of epsilon. This is independent of `gme.Gmax`.
@@ -106,7 +106,7 @@ Defines a point (only `gme.K1`), a line (`gme.K1` and `gme.K2`), or a triangle (
 The system is solved at the point `gme.K1` only. Here, `gme.nkp`, `gme.K2` and `gme.K3` are ignored.
 
 `klist_line(gme,flim)`<br/>
-The photonic dispersion is computed along the straight line between `gme.K1` and `gme.K2`. There are a total of `gme.nkp` points in this line (`gme.K1` and `gme.K2` included). Here `gme.K3` is ignored.
+The photonic dispersion is computed along the straight line between `gme.K1` and `gme.K2`. There are a total of `gme.nkp` points in this line (`gme.K1` and `gme.K2` are included). Here `gme.K3` is ignored.
 
 `klist_tri(gme,flim)`<br/>
 The photonic dispersion is computed along the perimiter of the triangle with vertices `gme.K1`, `gme.K2` and `gme.K3`. There are `gme.nkp` points along each perimeter line (total of 3*`gme.nkp`). Points `gme.K1`, `gme.K2` and `gme.K3` are not included in the simulation.
@@ -142,7 +142,7 @@ Allocates the arrays where the guided mode solutions will be stored.
 
 **10. Main loop over the k list**
 
-This is the main loop of the code, which iterate over the k list. The function `dnsgetvi(gme.lk,gme.k,kbz,gme.dimlk,5)` extract the components of the kbz-th k-vector from the array `gme.lk` (where all k points are stored) and copy them in the `gme.k` array. The latter is one used by the functions within the loop. The function `kmess(gme,kbz)` writes the current value of k in the format (kx,ky).
+This is the main loop of the code, which iterates over the k list. The function `dnsgetvi(gme.lk,gme.k,kbz,gme.dimlk,5)` extracts the components of the kbz-th k-vector from the array `gme.lk` (where all k points are stored) and copy them in the `gme.k` array. The latter is the one used by the functions within the loop. The function `kmess(gme,kbz)` writes the current value of k in the format (kx,ky).
 
 **_Computing the guided mode basis_**
 
@@ -164,13 +164,13 @@ Allocates and builts the H matrix.
 Computes the eigenmodes of the H matrix.
 
 `writedis(gme)`<br/>
-Writes the photonic dispersion in the file *dispersion.dat* with the format (kx,ky,k_brillouin,k_mag,w.a/2.pi.c), where k_brillouin is the corresponding value in the horizontal axis of the band diagram, and k_mag is the magnitude of the k vector over 2.pi (useful to plot the light line of the slab). Note that, the frequency output w.a/2.pi.c = a/lambda is dimesionless with 'a' and 'c' representing the lattice parameter and speed of light, respectively.
+Writes the photonic dispersion in the file *dispersion.dat* with the format (kx,ky,k_brillouin,k_mag,w.a/2.pi.c), where k_brillouin is the corresponding value in the horizontal axis of the band diagram, and k_mag is the magnitude of the k vector over 2.pi (useful to plot the light line of the slab). Note that, the frequency output w.a/2.pi.c = a/lambda is dimensionless with 'a' and 'c' representing the lattice parameter and speed of light, respectively.
 
 `writedis_1p(gme,p1)`<br/>
-Writes the photonic dispersion in the file *dispersion_1p.dat* with one parameter using the format (p1,kx,ky,k_brillouin,k_mag,w.a/2.pi.c), where p1 is one free parameter to be defined by the user. All other quantities are defined as in `writedis(gme)`.
+Writes the photonic dispersion in the file *dispersion_1p.dat* with one parameter using the format (p1,kx,ky,k_brillouin,k_mag,w.a/2.pi.c), where p1 is one free parameter defined by the user. All other quantities are defined as in `writedis(gme)`.
 
 `writedis_2p(gme,p1,p2)`<br/>
-Writes the photonic dispersion in the file *dispersion_1p.dat* with two parameters using the format (p1,p2,kx,ky,k_brillouin,k_mag,w.a/2.pi.c), where p1 and p2 are two free parameters to be defined by the user. All other quantities are defined as in `writedis(gme)`.
+Writes the photonic dispersion in the file *dispersion_1p.dat* with two parameters using the format (p1,p2,kx,ky,k_brillouin,k_mag,w.a/2.pi.c), where p1 and p2 are two free parameters defined by the user. All other quantities are defined as in `writedis(gme)`.
 
 **_Computing the diffraction losses_**
 
@@ -181,13 +181,13 @@ Allocates the array where the `gme.lstat_f-gme.lstat_i+1` values of Im{w} will b
 Computes the imaginary part of the frequency Im{w}.
 
 `writeloss(gme)`<br/>
-Writes the diffraction losses in the file *losses.dat* with the format (kx,ky,k_brillouin,lstate,w.a/2.pi.c,Im{w.a/2.pi.c}), where k_brillouin is the corresponding value in the horizontal axis of the band diagram, and lstate is the state for which the imaginary part of the frequency is calculated. Note that, as in the case of the photonic dispersion, the frequency output w.a/2.pi.c = a/lambda is dimesionless with 'a' and 'c' representing the lattice parameter and speed of light, respectively.
+Writes the diffraction losses in the file *losses.dat* with the format (kx,ky,k_brillouin,lstate,w.a/2.pi.c,Im{w.a/2.pi.c}), where k_brillouin is the corresponding value in the horizontal axis of the band diagram, and lstate is the state for which the imaginary part of the frequency is calculated. Note that, as in the case of the photonic dispersion, the frequency output w.a/2.pi.c = a/lambda is dimensionless with 'a' and 'c' representing the lattice parameter and speed of light, respectively.
 
 `writeloss_1p(gme,p1)`<br/>
-Writes the diffraction losses in the file *losses_1p.dat* with one parameter using the format (p1,kx,ky,k_brillouin,lstate,w.a/2.pi.c,Im{w.a/2.pi.c}), where p1 is one free parameter to be defined by the user. All other quantities are defined as in `writeloss(gme)`.
+Writes the diffraction losses in the file *losses_1p.dat* with one parameter using the format (p1,kx,ky,k_brillouin,lstate,w.a/2.pi.c,Im{w.a/2.pi.c}), where p1 is one free parameter defined by the user. All other quantities are defined as in `writeloss(gme)`.
 
 `writeloss_2p(gme,p1,p2)`<br/>
-Writes the diffraction losses in the file *losses_2p.dat* with two parameters using the format (p1,p2,kx,ky,k_brillouin,lstate,w.a/2.pi.c,Im{w.a/2.pi.c}), where p1 and p2 are two free parameters to be defined by the user. All other quantities are defined as in `writeloss(gme)`.
+Writes the diffraction losses in the file *losses_2p.dat* with two parameters using the format (p1,p2,kx,ky,k_brillouin,lstate,w.a/2.pi.c,Im{w.a/2.pi.c}), where p1 and p2 are two free parameters defined by the user. All other quantities are defined as in `writeloss(gme)`.
 
 `free_imw(gme)`<br/>
 Deallocates the array where the values of Im{w} are stored.
@@ -200,10 +200,10 @@ Writes the field in the file *Fc-k_kbz-band_state.dat*, where *F* refers to the 
 **_Memory deallocation_**
 
 `free_MHeigen(gme)`<br/>
-Deallocates all arrays associated to the eigenvalue problem.
+Deallocates all arrays associated with the eigenvalue problem.
 
 `free_TETM(gme)`<br/>
-Deallocates the arrays associated to the guided mode solutions.
+Deallocates the arrays associated with the guided mode solutions.
 
 `free_Metaeps1(gme)`, `free_Metaeps2(gme)` and `free_Metaeps3(gme)`<br/>
 Deallocates the dielectric matrices in the corresponding three regions.
@@ -214,7 +214,7 @@ Deallocates que G and g arrays.
 
 # <br/>The `eps.h` library
 
-The library *eps.h* contains the dielectric data structures and the main routines associated to the computation of the dielectric matrices. When using a given dielectric structure, it must be initialized through the constructor `init()`. Some of the structures, also must be deallocated before introducing any change in the geometry or material by means of the function `free()`, and they have to be initialized again. The following structures are currently included in the GME_Cpp package:
+The library *eps.h* contains the dielectric data structures and the main routines associated with the computation of the dielectric matrices. When using a given dielectric structure, it must be initialized through the constructor `init()`. Some of the structures must also be deallocated before introducing any change in the geometry or material by means of the function `free()`, and they have to be initialized again. The following structures are currently included in the GME_Cpp package:
 
 
 **<br/>`eps.recreg`**
@@ -225,8 +225,8 @@ Rectangular lattice of cylinders.
 `es`: dielectric constant of the slab.<br/>
 `er`: dielectric constant of the cylinders.<br/>
 `r`: radii of the cylinders.<br/>
-`lx`: Cell length along 'x'.<br/>
-`ly`: Cell length along 'y'.<br/>
+`lx`: cell length along 'x'.<br/>
+`ly`: cell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -267,10 +267,10 @@ H1 defect in a rectangular lattice of cylinders.
 `es`: dielectric constant of the slab.<br/>
 `er`: dielectric constant of the cylinders.<br/>
 `r`: radii of the cylinders.<br/>
-`lxp`: Basic cell length along 'x'.<br/>
-`lyp`: Basic cell length along 'y'.<br/>
-`lx`: Supercell length along 'x' (integer multiple of `lxp`).<br/>
-`ly`: Supercell length along 'y' (integer multiple of `lyp`).<br/>
+`lxp`: basic cell length along 'x'.<br/>
+`lyp`: basic cell length along 'y'.<br/>
+`lx`: supercell length along 'x' (integer multiple of `lxp`).<br/>
+`ly`: supercell length along 'y' (integer multiple of `lyp`).<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -284,7 +284,7 @@ H1 defect in a hexagonal lattice of cylinders.
 `es`: dielectric constant of the slab.<br/>
 `er`: dielectric constant of the cylinders.<br/>
 `r`: radii of the cylinders.<br/>
-`l`: Supercell parameter (integer number).<br/>
+`l`: supercell parameter (integer number).<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -298,8 +298,8 @@ H1 defect in a hexagonal lattice of cylinders with rectangular cell.
 `es`: dielectric constant of the slab.<br/>
 `er`: dielectric constant of the cylinders.<br/>
 `r`: radii of the cylinders.<br/>
-`lx`: Supercell length along 'x'.<br/>
-`ly`: Supercell length along 'y'.<br/>
+`lx`: supercell length along 'x'.<br/>
+`ly`: supercell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -313,10 +313,10 @@ L2 defect in a rectangular lattice of cylinders.
 `es`: dielectric constant of the slab.<br/>
 `er`: dielectric constant of the cylinders.<br/>
 `r`: radii of the cylinders.<br/>
-`lxp`: Basic cell length along 'x'.<br/>
-`lyp`: Basic cell length along 'y'.<br/>
-`lx`: Supercell length along 'x' (integer multiple of `lxp`).<br/>
-`ly`: Supercell length along 'y' (integer multiple of `lyp`).<br/>
+`lxp`: basic cell length along 'x'.<br/>
+`lyp`: basic cell length along 'y'.<br/>
+`lx`: supercell length along 'x' (integer multiple of `lxp`).<br/>
+`ly`: supercell length along 'y' (integer multiple of `lyp`).<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -330,7 +330,7 @@ L2 defect in a hexagonal lattice of cylinders.
 `es`: dielectric constant of the slab.<br/>
 `er`: dielectric constant of the cylinders.<br/>
 `r`: radii of the cylinders.<br/>
-`l`: Supercell parameter (integer number).<br/>
+`l`: supercell parameter (integer number).<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -344,8 +344,8 @@ L2 defect in a hexagonal lattice of cylinders with rectangular cell.
 `es`: dielectric constant of the slab.<br/>
 `er`: dielectric constant of the cylinders.<br/>
 `r`: radii of the cylinders.<br/>
-`lx`: Supercell length along 'x'.<br/>
-`ly`: Supercell length along 'y'.<br/>
+`lx`: supercell length along 'x'.<br/>
+`ly`: supercell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -361,10 +361,10 @@ L3 defect in a rectangular lattice of cylinders.
 `r`: radii of the cylinders.<br/>
 `s`: outward displacement of the closest lateral holes.<br/>
 `rs`: radii of the closest lateral holes.<br/>
-`lxp`: Basic cell length along 'x'.<br/>
-`lyp`: Basic cell length along 'y'.<br/>
-`lx`: Supercell length along 'x' (integer multiple of `lxp`).<br/>
-`ly`: Supercell length along 'y' (integer multiple of `lyp`).<br/>
+`lxp`: basic cell length along 'x'.<br/>
+`lyp`: basic cell length along 'y'.<br/>
+`lx`: supercell length along 'x' (integer multiple of `lxp`).<br/>
+`ly`: supercell length along 'y' (integer multiple of `lyp`).<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -380,7 +380,7 @@ L3 defect in a hexagonal lattice of cylinders.
 `r`: radii of the cylinders.<br/>
 `s`: outward displacement of the closest lateral holes.<br/>
 `rs`: radii of the closest lateral holes.<br/>
-`l`: Supercell parameter (integer number).<br/>
+`l`: supercell parameter (integer number).<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -396,8 +396,8 @@ L3 defect in a hexagonal lattice of cylinders with rectangular cell.
 `r`: radii of the cylinders.<br/>
 `s`: outward displacement of the closest lateral holes.<br/>
 `rs`: radii of the closest lateral holes.<br/>
-`lx`: Supercell length along 'x'.<br/>
-`ly`: Supercell length along 'y'.<br/>
+`lx`: supercell length along 'x'.<br/>
+`ly`: supercell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -421,8 +421,8 @@ L3 defect with outward displacement of 5 closest lateral holes in a hexagonal la
 `rs4`: radii of the fourth closest lateral holes.<br/>
 `s5`: outward displacement of the fifth closest lateral holes.<br/>
 `rs5`: radii of the fifth closest lateral holes.<br/>
-`lx`: Supercell length along 'x'.<br/>
-`ly`: Supercell length along 'y'.<br/>
+`lx`: supercell length along 'x'.<br/>
+`ly`: supercell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -436,9 +436,9 @@ Waveguide defect in a rectangular lattice of cylinders.
 `es`: dielectric constant of the slab.<br/>
 `er`: dielectric constant of the cylinders.<br/>
 `r`: radii of the cylinders.<br/>
-`ax`: Basic cell length along 'x'.<br/>
-`lyp`: Basic cell length along 'y'.<br/>
-`ly`: Supercell length along 'y' (integer multiple of `lyp`).<br/>
+`ax`: basic cell length along 'x'.<br/>
+`lyp`: basic cell length along 'y'.<br/>
+`ly`: supercell length along 'y' (integer multiple of `lyp`).<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -453,7 +453,7 @@ Waveguide defect in a hexagonal lattice of triangles with rectangular cell.
 `et`: dielectric constant of the triangles.<br/>
 `L`: triangle side length.<br/>
 `theta`: triangle rotation.<br/>
-`ly`: Supercell length along 'y'.<br/>
+`ly`: supercell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.<br/>
@@ -470,7 +470,7 @@ Waveguide defect in a hexagonal lattice of polygons (N sides) with rectangular c
 `N`: number of sides.<br/>
 `l`: polygon side length.<br/>
 `th`: polygon rotation.<br/>
-`ly`: Supercell length along 'y'.<br/>
+`ly`: supercell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.<br/>
@@ -485,7 +485,7 @@ Waveguide defect in a hexagonal lattice of cylinders with rectangular cell.
 `es`: dielectric constant of the slab.<br/>
 `er`: dielectric constant of the cylinders.<br/>
 `r`: radii of the cylinders.<br/>
-`ly`: Supercell length along 'y'.<br/>
+`ly`: supercell length along 'y'.<br/>
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.
@@ -501,9 +501,9 @@ L3 defect in a hexagonal lattice of cylinders with disorder (hole radii only) an
 `r`: radii of the cylinders.<br/>
 `s`: outward displacement of the closest lateral holes.<br/>
 `rs`: radii of the closest lateral holes.<br/>
-`lx`: Supercell length along 'x'.<br/>
-`ly`: Supercell length along 'y'.<br/>
-`sigma`: Variance of the gaussian distribution.
+`lx`: supercell length along 'x'.<br/>
+`ly`: supercell length along 'y'.<br/>
+`sigma`: variance of the gaussian distribution.
 
 **_Constructor and functions_**<br/>
 `init()`: initializes the dielectric structure.<br/>
@@ -512,7 +512,7 @@ L3 defect in a hexagonal lattice of cylinders with disorder (hole radii only) an
 
 # <br/>The `gme.h` library
 
-The library *gme.h* contains the main functions and routines of the GME method, corresponding to the photonic dispersion and diffraction losses. The functions associated to the electromagnetic fields and the root solver are also in this library.
+The library *gme.h* contains the main functions and routines of the GME method, corresponding to the photonic dispersion and diffraction losses. The functions associated with the electromagnetic fields and the root solver are also in this library.
 
 
 # <br/>The `matrix.h` library
