@@ -12,7 +12,7 @@ The following files are included in the GME_Cpp package:
 
 # `main.cpp`
 
-The file `main.ccp` contains the input parameters and the main control sequences of the GME method. Generally speaking, the file is composed of *Initial instructions*, *Photonic dispersion*, *Diffraction losses*, *Structure*, *Basis and symmetry*, *Writing epsilon*, *K list*, *Initial checks and rountines of the code*, *Main loop for each k*
+The file `main.ccp` contains the input parameters and the main control sequences of the GME method. This file can be broken down as follows: *Initial instructions*, *Photonic dispersion*, *Diffraction losses*, *Structure*, *Basis and symmetry*, *Writing epsilon*, *K list*, *Initial checks and rountines of the code*, *Main loop for each k*
 
 **1. Initial instructions**
 
