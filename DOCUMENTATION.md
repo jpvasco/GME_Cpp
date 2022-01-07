@@ -193,14 +193,337 @@ Deallocates the array where the values of Im{w} are stored.
 
 **_Computing fields_**
 
+`writefields(gme,flim,eps,kbz)`<br/>
+Writes the field in the file *Fc-k_kbz-band_state.dat*, where *F* refers to the electromagnetic field (*D* or *H*), *c* refers to the field component (x, y or z), kbz refers to the kstate and state refers to the photonic mode state (the band number starting from zero). The format in the output file is (x,y,z,Re{Fc},Im{Fc}).
+
+**_Memory deallocation_**
+
+`free_MHeigen(gme)`<br/>
+Deallocates all arrays associated to the eigenvalue problem.
+
+`free_TETM(gme)`<br/>
+Deallocates the arrays associated to the guided mode solutions.
+
+`free_Metaeps1(gme)`, `free_Metaeps2(gme)` and `free_Metaeps3(gme)`<br/>
+Deallocates the dielectric matrices in the corresponding three regions.
+
+`free_Ggs(gme)`<br/>
+Deallocates que G and g arrays.
 
 
+# The `eps.h` library
+
+The library *eps.h* contains the dielectric data structures and the main routines associated to the computation of the dielectric matrices. When using a given dielectric structure, it must be initialized through the constructor `init()`. Some of the structures, also must be deallocated before introducing any change in the geometry or material by means of the function `free()`, and they have to be initialized again. The following structures are currently included in the GME_Cpp package:
 
 
+**<br/>`eps.recreg`**
+
+Rectangular lattice of cylinders.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`lx`: Cell length along 'x'.<br/>
+`ly`: Cell length along 'y'.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
 
 
+**<br/>`eps.hexreg`**
+
+Regular hexagonal lattice of cylinders.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
 
 
+**<br/>`eps.Thexreg`**
+
+Regular hexagonal lattice of triangles.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`et`: dielectric constant of the triangles.<br/>
+`L`: triangle side length.<br/>
+`theta`: triangle rotation.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
 
 
-<!-- <img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1"> -->
+**<br/>`eps.rech1`**
+
+H1 defect in a rectangular lattice of cylinders.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`lxp`: Basic cell length along 'x'.<br/>
+`lyp`: Basic cell length along 'y'.<br/>
+`lx`: Supercell length along 'x' (integer multiple of `lxp`).<br/>
+`ly`: Supercell length along 'y' (integer multiple of `lyp`).<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.hexh1`**
+
+H1 defect in a hexagonal lattice of cylinders.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`l`: Supercell parameter (integer number).<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.hexh1r`**
+
+H1 defect in a hexagonal lattice of cylinders with rectangular cell.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`lx`: Supercell length along 'x'.<br/>
+`ly`: Supercell length along 'y'.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.recl2`**
+
+L2 defect in a rectangular lattice of cylinders.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`lxp`: Basic cell length along 'x'.<br/>
+`lyp`: Basic cell length along 'y'.<br/>
+`lx`: Supercell length along 'x' (integer multiple of `lxp`).<br/>
+`ly`: Supercell length along 'y' (integer multiple of `lyp`).<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.hexl2`**
+
+L2 defect in a hexagonal lattice of cylinders.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`l`: Supercell parameter (integer number).<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.hexl2r`**
+
+L2 defect in a hexagonal lattice of cylinders with rectangular cell.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`lx`: Supercell length along 'x'.<br/>
+`ly`: Supercell length along 'y'.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.recl3`**
+
+L3 defect in a rectangular lattice of cylinders.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`s`: outward displacement of the closest lateral holes.<br/>
+`rs`: radii of the closest lateral holes.<br/>
+`lxp`: Basic cell length along 'x'.<br/>
+`lyp`: Basic cell length along 'y'.<br/>
+`lx`: Supercell length along 'x' (integer multiple of `lxp`).<br/>
+`ly`: Supercell length along 'y' (integer multiple of `lyp`).<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.hexl3`**
+
+L3 defect in a hexagonal lattice of cylinders.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`s`: outward displacement of the closest lateral holes.<br/>
+`rs`: radii of the closest lateral holes.<br/>
+`l`: Supercell parameter (integer number).<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.hexl3r`**
+
+L3 defect in a hexagonal lattice of cylinders with rectangular cell.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`s`: outward displacement of the closest lateral holes.<br/>
+`rs`: radii of the closest lateral holes.<br/>
+`lx`: Supercell length along 'x'.<br/>
+`ly`: Supercell length along 'y'.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.hexl3sr`**
+
+L3 defect with outward displacement of 5 closest lateral holes in a hexagonal lattice of cylinders with rectangular cell.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`s1`: outward displacement of the closest lateral holes.<br/>
+`rs1`: radii of the closest lateral holes.<br/>
+`s2`: outward displacement of the second closest lateral holes.<br/>
+`rs2`: radii of the second closest lateral holes.<br/>
+`s3`: outward displacement of the third closest lateral holes.<br/>
+`rs3`: radii of the third closest lateral holes.<br/>
+`s4`: outward displacement of the fourth closest lateral holes.<br/>
+`rs4`: radii of the fourth closest lateral holes.<br/>
+`s5`: outward displacement of the fifth closest lateral holes.<br/>
+`rs5`: radii of the fifth closest lateral holes.<br/>
+`lx`: Supercell length along 'x'.<br/>
+`ly`: Supercell length along 'y'.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.recwg`**
+
+Waveguide defect in a rectangular lattice of cylinders.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`ax`: Basic cell length along 'x'.<br/>
+`lyp`: Basic cell length along 'y'.<br/>
+`ly`: Supercell length along 'y' (integer multiple of `lyp`).<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.Thexwgr`**
+
+Waveguide defect in a hexagonal lattice of triangles with rectangular cell.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`et`: dielectric constant of the triangles.<br/>
+`L`: triangle side length.<br/>
+`theta`: triangle rotation.<br/>
+`ly`: Supercell length along 'y'.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+`free()`: deallocates the structure
+
+
+**<br/>`eps.Phexwgr`**
+
+Waveguide defect in a hexagonal lattice of polygons (N sides) with rectangular cell
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`ep`: dielectric constant of the polygons.<br/>
+`N`: number of sides.<br/>
+`l`: polygon side length.<br/>
+`th`: polygon rotation.<br/>
+`ly`: Supercell length along 'y'.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+`free()`: deallocates the structure
+
+
+**<br/>`eps.hexwgr`**
+
+Waveguide defect in a hexagonal lattice of cylinders with rectangular cell.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`ly`: Supercell length along 'y'.<br/>
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+
+
+**<br/>`eps.dishexl3r`**
+
+L3 defect in a hexagonal lattice of cylinders with disorder (hole radii only) and rectangular cell.
+
+**_Parameters_**<br/>
+`es`: dielectric constant of the slab.<br/>
+`er`: dielectric constant of the cylinders.<br/>
+`r`: radii of the cylinders.<br/>
+`s`: outward displacement of the closest lateral holes.<br/>
+`rs`: radii of the closest lateral holes.<br/>
+`lx`: Supercell length along 'x'.<br/>
+`ly`: Supercell length along 'y'.<br/>
+`sigma`: Variance of the gaussian distribution.
+
+**_Constructor and functions_**<br/>
+`init()`: initializes the dielectric structure.
+`free()`: deallocates the structure
+
+
+# The `gme.h` library
+
+The library ``gme.h'' contains the main functions and routines of the GME method, corresponding to the photonic dispersion and diffraction losses. The functions associated to the electromagnetic fields and the root solver are also in this library.
+
+
+# The `matrix.h` library
+
+The library ``matrix.h'' contains the LAPACK matrix routines used by the GME method.
+
+
+# The `compile.sh` library
+
+The *compile.sh* is an executable file with the compilation command.
+
+
+# Comments on units
+
+Every length in the c++ GME code is scaled with respect to the lattice parameter 'a'. For example, when setting $d=0.5$, it must be interpreted as 'd/a=0.5'. The wavenumber 'k' is also scaled with respect to the lattice parameter as 'ak, therefore, when setting 'k=2.pi', it must be interpreted as ka=2.pi. The frequency magnitude used in the code is 'w.a/2.pi.c' or 'a/lambda', which is a dimensionless quantity. Therefore, when the code shows a frequency (or its imaginary part) value of '0.32', this means 'w.a/2.pi.c=0.32' so that the actual angular frequency is 'w=0.32.2.pi/a'. 
